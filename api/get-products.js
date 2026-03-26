@@ -2,11 +2,10 @@
 export default async function handler(req, res) {
     // 1. Your private credentials (Replace these with your actual strings)
     const BASE_ID = "appuADRVfEmJxfzuV";
-    const TABLE_NAME = "Table%201";
-    const TOKEN = "YOUR_ACTUAL_AIRTABLE_TOKEN"; 
+    const TABLE_NAME = "Table 1";
+    const TOKEN = "patFIMfP2SvLFGMZq.af21e464ff19d9f6882b831d2413ab24b76c54eed29085e5812cec74a5a16cd3"; 
 
-    const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
-
+const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}`;
     try {
         const response = await fetch(airtableUrl, {
             method: "GET",

@@ -186,7 +186,6 @@
   </div>
 </footer>
  <script>
-    // Configuration
     let current = 0;
     let slideInterval;
 
@@ -210,22 +209,22 @@
     };
 
     const fetchProducts = async () => {
-        // We now call our OWN API folder instead of Airtable directly
         const apiUrl = "/api/get-products";
+        const container = document.querySelector('.container2');
 
         try {
             const response = await fetch(apiUrl);
             const data = await response.json();
 
-            if (data.error) {
-                console.error("API Error:", data.error);
+            // Check if Airtable or Vercel returned an error
+            if (data.error || !data.records) {
+                console.error("API Error Detail:", data);
+                if(container) container.innerHTML = '<p class="text-white">Unable to load products. Check API configuration.</p>';
                 return;
             }
-
-            const container = document.querySelector('.container2');
-            if (!container) return;
             
-            container.innerHTML = ''; // Clear the skeleton loader
+            if (!container) return;
+            container.innerHTML = ''; 
 
             data.records.forEach((record) => {
                 const fields = record.fields;
@@ -263,8 +262,10 @@
                 container.appendChild(slide);
             });
 
-            // Start the slider after products are added to DOM
+            // FIX: Ensure current is reset to 0 before initializing
+            current = 0;
             updateSlides();
+
             if (slideInterval) clearInterval(slideInterval);
             slideInterval = setInterval(() => {
                 const totalSlides = document.querySelectorAll('.product-slide').length;
@@ -276,10 +277,10 @@
 
         } catch (error) {
             console.error("Connection Error:", error);
+            if(container) container.innerHTML = '<p class="text-white">Connection lost. Refresh the page.</p>';
         }
     };
 
-    // Run the fetch on load
     fetchProducts();
 </script>
   <script src="main.js"></script>
