@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>
+        // Check local storage or system settings immediately
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563eb',
+            darkBg: '#0a0a0a', 
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.8s ease-out forwards',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <title>Modern E-commerce</title>
+</head>
+<body class="bg-white dark:bg-darkBg transition-colors duration-500 overflow-x-hidden">
+
+  <nav class="sticky top-0 z-50 bg-white/70 dark:bg-black/40 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/10">
+    <div class="max-w-7xl mx-auto px-6 h-14 flex justify-between items-center">
+      <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">MODERN.SHOP</div>
+      <div class="hidden md:flex space-x-8 text-xs font-medium uppercase tracking-widest">
+        <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white transition">Home</a>
+        <a href="products.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white transition">Shop</a>
+        <a href="about.html" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-white transition">About</a>
+      </div>
+      <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300 transition-transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+<div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/20 dark:bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-600/20 dark:bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+<main class="max-w-7xl mx-auto px-6 py-12 md:py-24 relative z-10">
+    <header class="mb-20 animate-fade-up">
+        <h1 class="text-5xl md:text-8xl font-black text-zinc-900 dark:text-white tracking-tighter mb-8 leading-[0.9]">
+            We build for <br>
+            <span class="text-blue-600">the future.</span>
+        </h1>
+        <p class="text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl font-medium leading-relaxed">
+            MODERN.SHOP is a design-driven laboratory focused on the intersection of tactile hardware and digital precision. We believe that the tools you use should be as inspiring as the work you create.
+        </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32 animate-fade-up" style="animation-delay: 0.2s;">
+        <div class="p-10 bg-white/40 dark:bg-white/[0.03] backdrop-blur-2xl border border-black/[0.05] dark:border-white/10 rounded-[2.5rem]">
+            <div class="text-4xl font-black text-blue-600 mb-2">99.9%</div>
+            <div class="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Precision Crafted</div>
+        </div>
+        <div class="p-10 bg-white/40 dark:bg-white/[0.03] backdrop-blur-2xl border border-black/[0.05] dark:border-white/10 rounded-[2.5rem]">
+            <div class="text-4xl font-black text-blue-600 mb-2">24/7</div>
+            <div class="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Creator Support</div>
+        </div>
+        <div class="p-10 bg-white/40 dark:bg-white/[0.03] backdrop-blur-2xl border border-black/[0.05] dark:border-white/10 rounded-[2.5rem]">
+            <div class="text-4xl font-black text-blue-600 mb-2">Global</div>
+            <div class="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400">Shipping Available</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center animate-fade-up" style="animation-delay: 0.4s;">
+        <div class="relative group">
+            <div class="absolute -inset-4 bg-gradient-to-tr from-blue-600/20 to-indigo-600/20 rounded-[3rem] blur-2xl opacity-50"></div>
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000" 
+                 alt="Our Studio" 
+                 class="relative rounded-[2.5rem] object-cover w-full h-[500px] border border-white/20 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
+        </div>
+        
+        <div class="space-y-12">
+            <section>
+                <h2 class="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-4">The Philosophy</h2>
+                <h3 class="text-3xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">Less, but better.</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
+                    Inspired by industrial minimalism, our hardware stripped of the unnecessary. We use premium materials like aerospace-grade aluminum and recycled glass to ensure your setup lasts a lifetime.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-4">Sustainability</h2>
+                <h3 class="text-3xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">Earth-first engineering.</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
+                    Every product is shipped in 100% plastic-free packaging. We partner with carbon-neutral logistics to ensure your gear reaches you without costing the planet.
+                </p>
+            </section>
+        </div>
+    </div>
+</main>
+
+  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[80%] max-w-[300px] md:hidden">
+    <div class="bg-white/70 dark:bg-black/50 backdrop-blur-2xl border border-gray-200/50 dark:border-white/10 rounded-full py-2 flex justify-around shadow-2xl">
+        <a href="index.html" class="p-2 text-gray-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg></a>
+        <a href="products.html" class="p-2 text-gray-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg></a>
+        <a href="about.html" class="p-2 text-blue-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></a>
+    </div>
+  </div>
+ <footer class="relative mt-20 overflow-hidden">
+  <div class="relative w-full leading-[0]">
+    <svg width="100%" height="auto" id="svg" viewBox="0 0 1440 390" xmlns="http://www.w3.org/2000/svg" class="transition duration-300 ease-in-out">
+      <defs>
+        <linearGradient id="footer-gradient" x1="1%" y1="41%" x2="99%" y2="59%">
+          <stop offset="5%" stop-color="#2563eb"></stop>
+          <stop offset="95%" stop-color="#6366f1"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M 0,400 L 0,75 C 125.7,61.1 251.4,47.1 364,43 C 476.6,38.9 576,44.5 682,55 C 788,65.5 900.6,80.9 1028,85 C 1155.4,89.1 1297.7,82.1 1440,75 L 1440,400 L 0,400 Z" fill="url(#footer-gradient)" fill-opacity="0.2"></path>
+      <path d="M 0,400 L 0,175 C 128.7,178.4 257.4,181.8 380,184 C 502.6,186.2 619.3,187.3 743,179 C 866.8,170.7 997.6,153.2 1115,151 C 1232.4,148.8 1336.2,161.9 1440,175 L 1440,400 L 0,400 Z" fill="url(#footer-gradient)" fill-opacity="0.4"></path>
+      <path d="M 0,400 L 0,275 C 134.9,268.4 269.9,261.8 407,256 C 544.1,250.2 683.5,245.3 775,248 C 866.5,250.8 910.1,261.2 1013,267 C 1115.9,272.8 1277.9,273.9 1440,275 L 1440,400 L 0,400 Z" fill="url(#footer-gradient)" fill-opacity="1"></path>
+    </svg>
+
+    <div class="absolute bottom-0 w-full pb-10 pt-20">
+      <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-12 text-black dark:text-white transition-colors duration-500">
+        
+        <div class="col-span-2 md:col-span-1 space-y-4">
+          <div class="text-xl font-black ">MODERN.SHOP</div>
+          <p class="text-black/70 dark:text-blue-100/60 text-xs leading-relaxed max-w-[200px] font-medium">
+            Defining the future of minimalist hardware. Built for creators, by creators.
+          </p>
+        </div>
+
+        <div class="space-y-4">
+          <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-700 dark:text-blue-200">Products</h4>
+          <ul class="text-sm space-y-2 text-black/80 dark:text-white/80 font-medium md:font-normal">
+            <li><a href="#" class="hover:text-blue-600 dark:hover:text-white transition hover:font-bold">Audio Series</a></li>
+            <li><a href="#" class="hover:text-blue-600 dark:hover:text-white transition hover:font-bold">Inputs</a></li>
+            <li><a href="#" class="hover:text-blue-600 dark:hover:text-white transition hover:font-bold">Accessories</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-4">
+          <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-700 dark:text-blue-200">Company</h4>
+          <ul class="text-sm space-y-2 text-black/80 dark:text-white/80 font-medium md:font-normal">
+            <li><a href="#" class="hover:text-blue-600 dark:hover:text-white transition hover:font-bold">Our Story</a></li>
+            <li><a href="#" class="hover:text-blue-600 dark:hover:text-white transition hover:font-bold">Sustainability</a></li>
+            <li><a href="#" class="hover:text-blue-600 dark:hover:text-white transition hover:font-bold">Terms</a></li>
+          </ul>
+        </div>
+
+        <div class="space-y-4 text-right md:text-left">
+          <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-blue-700 dark:text-blue-200">Connect</h4>
+          <div class="flex md:justify-start justify-end gap-4">
+             <a href="#" class="hover:scale-110 transition opacity-80 hover:opacity-100"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
+             <a href="#" class="hover:scale-110 transition opacity-80 hover:opacity-100"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-6 mt-10 md:mt-16 pt-8 pb-4 md:pb-0 border-t border-black/10 dark:border-white/10 flex flex-col-reverse md:flex-row justify-between items-center gap-4 transition-colors duration-500">
+  
+  <div class="text-[10px] text-black dark:text-blue-100/70 uppercase tracking-[0.2em] font-black mb-0">
+    &copy; ALL RIGHTS RESERVED.
+  </div>
+
+  <div class="hidden md:flex text-[10px] text-black dark:text-blue-100/70 uppercase tracking-[0.2em] gap-6 font-black">
+    <a href="#" class="hover:text-blue-600 dark:hover:text-white transition">Privacy Policy</a>
+    <a href="#" class="hover:text-blue-600 dark:hover:text-white transition">Cookies</a>
+  </div>
+
+</div>
+    </div>
+  </div>
+</footer>
+  <script src="main.js"></script>
+</body>
+</html>
