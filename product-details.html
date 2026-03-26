@@ -138,51 +138,60 @@
     </div>
   </div>
 </footer>
-    <script>
-        const BASE_ID = 'appuADRVfEmJxfzuV';
-        const TOKEN = 'patFIMfP2SvLFGMZq.b1a6c6dbf123b83907e9c59e22003fa9d8a8099d7b4cab8fb3282698010df2b9';
-        const TABLE_NAME = 'Table 1';
-        const PHONE_NUMBER = '+923311114128'; // <-- CHANGE THIS TO YOUR NUMBER
+   <script>
+    // Just your number here. Everything else is hidden in the backend!
+    const PHONE_NUMBER = '923311114128'; 
 
-        async function loadProduct() {
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            if(!id) {
-                window.location.href = 'index.html';
+    async function loadProduct() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        
+        // If no ID is found, send them back to the shop
+        if(!id) {
+            window.location.href = 'index.html';
+            return;
+        };
+
+        // Instead of Airtable, we call YOUR Vercel API
+        // Note: We pass the ID so the API knows which specific product to get
+        const apiUrl = `/api/get-products?id=${id}`;
+
+        try {
+            const res = await fetch(apiUrl);
+            const data = await res.json();
+
+            // If you are fetching a single record, it might be the object directly 
+            // or inside a records array depending on how you wrote your API.
+            // Let's assume your API returns the single record if an ID is provided:
+            const fields = data.fields;
+
+            if (!fields) {
+                console.error("Product not found");
                 return;
-            };
-
-            const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}/${id}`;
-            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-
-            try {
-                const res = await fetch(proxyUrl, {
-                    headers: { "Authorization": `Bearer ${TOKEN}` }
-                });
-                const data = await res.json();
-                const fields = data.fields;
-
-                const name = fields['Product Name'] || 'Unnamed Product';
-                const price = fields['Price'] || '0.00';
-
-                // Inject Data
-                document.getElementById('p-name').innerText = name;
-                document.getElementById('p-price').innerText = `$${price}`;
-                document.getElementById('p-desc').innerText = fields['Description'] || 'No description available.';
-                document.getElementById('p-image').src = fields.Images?.[0]?.url || "https://placehold.co/600x600/18181b/2563eb?text=IMAGE+LOST";
-                
-                // Update WhatsApp Link
-                const message = encodeURIComponent(`Hi! I'm interested in the ${name} ($${price}). Is it available?`);
-                document.getElementById('whatsapp-btn').href = `https://wa.me/${PHONE_NUMBER}?text=${message}`;
-
-                document.title = `${name} | MODERN.SHOP`;
-                
-            } catch (err) {
-                console.error("Error:", err);
             }
-        }
 
-        loadProduct();
-    </script>
+            const name = fields['Product Name'] || 'Unnamed Product';
+            const price = fields['Price'] || '0.00';
+
+            // Inject Data into your HTML elements
+            document.getElementById('p-name').innerText = name;
+            document.getElementById('p-price').innerText = `$${price}`;
+            document.getElementById('p-desc').innerText = fields['Description'] || 'No description available.';
+            document.getElementById('p-image').src = fields.Images?.[0]?.url || "https://placehold.co/600x600/18181b/2563eb?text=IMAGE+LOST";
+            
+            // Update WhatsApp Link with a clean message
+            const message = encodeURIComponent(`Hi! I'm interested in the ${name} ($${price}). Is it available?`);
+            document.getElementById('whatsapp-btn').href = `https://wa.me/${PHONE_NUMBER}?text=${message}`;
+
+            // Update Browser Tab Title
+            document.title = `${name} | MODERN.SHOP`;
+            
+        } catch (err) {
+            console.error("Error loading product details:", err);
+        }
+    }
+
+    loadProduct();
+</script>
 </body>
 </html>

@@ -241,95 +241,88 @@
     updateSlides();
   </script>
   <script>
-     const BASE_ID = 'appuADRVfEmJxfzuV'; 
-    const TOKEN = 'patFIMfP2SvLFGMZq.b1a6c6dbf123b83907e9c59e22003fa9d8a8099d7b4cab8fb3282698010df2b9'; 
-    const TABLE_NAME = 'Table 1';
-
-    const container = document.querySelector('.container')
-
     const fetchProducts = async () => {
-    const airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
-    // We use corsproxy.io as a prefix to the actual URL
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(airtableUrl)}`;
-
-    try {
-        const response = await fetch(proxyUrl, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${TOKEN}`,
-                "Content-Type": "application/json"
-            }
-        });
-
-        const data = await response.json();
-
-        // Troubleshooting: If it still fails, this will tell us exactly why
-        if (data.error) {
-            console.error("Airtable rejected the request:", data.error.message);
-            return;
-        }
-
+        // Pointing to your internal Vercel API
+        const apiUrl = "/api/get-products";
         const container = document.querySelector('.container');
-        container.innerHTML = ''; // Clear the static cards
 
-        data.records.forEach((record) => {
-            const fields = record.fields;
-            const name = fields['Product Name'];
-            const imgUrl = fields.Images?.[0]?.url
-            console.log(fields)
-            const product = document.createElement('div');
-            product.innerHTML = `
-    <a href="product-details.html?id=${record.id}" class="group relative h-full flex flex-col 
-                bg-white/40 dark:bg-white/[0.03] 
-                backdrop-blur-2xl 
-                border border-black/[0.05] dark:border-white/10 
-                rounded-[2.5rem] overflow-hidden transition-all duration-700 
-                shadow-[0_8px_30px_rgb(0,0,0,0.04)] 
-                hover:shadow-[0_20px_80px_-15px_rgba(37,99,235,0.25)] 
-                hover:-translate-y-4 hover:bg-white/60 dark:hover:bg-white/[0.07]
-                cursor-pointer block">
-        
-        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-blue-600/10 via-transparent to-indigo-600/5 pointer-events-none"></div>
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
 
-        <div class="aspect-square p-10 flex items-center justify-center overflow-hidden">
-            <div class="relative w-full h-full flex items-center justify-center">
-                <div class="absolute inset-0 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/15 transition-colors duration-700"></div>
-                <img src="${imgUrl || 'https://placehold.co/600x600/f4f4f5/2563eb?text=IMAGE+GOT+LOST'}" 
-                     alt="${name}" 
-                     class="relative z-10 w-full h-full object-contain transition-all duration-700 scale-90 group-hover:scale-110 group-hover:-rotate-3 drop-shadow-2xl">
-            </div>
-        </div>
-        
-        <div class="p-8 pt-0 flex-grow flex flex-col justify-between text-center relative z-10">
-            <div>
-                <h3 class="text-xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase mb-2 transition-colors group-hover:text-blue-600">
-                    ${name || 'Product'}
-                </h3>
-                <p class="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-[0.3em] line-clamp-2 min-h-[30px] mb-6">
-                    ${fields.Description || 'Conceptual Hardware'}
-                </p>
-            </div>
+            // Error Handling
+            if (data.error || !data.records) {
+                console.error("API Error:", data.error);
+                if(container) container.innerHTML = '<p class="text-white text-center w-full">Error loading products.</p>';
+                return;
+            }
 
-            <div class="relative">
-                <span class="inline-block px-8 py-2.5 rounded-full 
-                             bg-white/10 dark:bg-white/5 
-                             backdrop-blur-md border border-black/[0.08] dark:border-white/10 
-                             text-sm font-black text-zinc-900 dark:text-white transition-all 
-                             group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent group-hover:shadow-lg group-hover:shadow-blue-600/30">
-                    $${fields.Price || '0.00'}
-                </span>
-            </div>
-        </div>
-    </a>
-`;
-            container.appendChild(product);
-        });
-    } catch (error) {
-        console.error("Connection Error:", error);
-    }
-}
-    fetchProducts()
-  </script>
+            if (!container) return;
+            container.innerHTML = ''; // Clear the static/skeleton cards
+
+            data.records.forEach((record) => {
+                const fields = record.fields;
+                const name = fields['Product Name'] || 'New Arrival';
+                const desc = fields['Description'] || 'Minimalist hardware crafted for the modern creator.';
+                const imgUrl = fields.Images?.[0]?.url || "https://placehold.co/600x600/18181b/2563eb?text=IMAGE+LOST";
+                const price = fields['Price'] || '0.00';
+
+                const product = document.createElement('div');
+                // Using your exact class styling for the cards
+                product.innerHTML = `
+                    <a href="product-details.html?id=${record.id}" class="group relative h-full flex flex-col 
+                                bg-white/40 dark:bg-white/[0.03] 
+                                backdrop-blur-2xl 
+                                border border-black/[0.05] dark:border-white/10 
+                                rounded-[2.5rem] overflow-hidden transition-all duration-700 
+                                shadow-[0_8px_30px_rgb(0,0,0,0.04)] 
+                                hover:shadow-[0_20px_80px_-15px_rgba(37,99,235,0.25)] 
+                                hover:-translate-y-4 hover:bg-white/60 dark:hover:bg-white/[0.07]
+                                cursor-pointer block">
+                        
+                        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-blue-600/10 via-transparent to-indigo-600/5 pointer-events-none"></div>
+
+                        <div class="aspect-square p-10 flex items-center justify-center overflow-hidden">
+                            <div class="relative w-full h-full flex items-center justify-center">
+                                <div class="absolute inset-0 bg-blue-500/5 rounded-full blur-3xl group-hover:bg-blue-500/15 transition-colors duration-700"></div>
+                                <img src="${imgUrl}" 
+                                     alt="${name}" 
+                                     class="relative z-10 w-full h-full object-contain transition-all duration-700 scale-90 group-hover:scale-110 group-hover:-rotate-3 drop-shadow-2xl">
+                            </div>
+                        </div>
+                        
+                        <div class="p-8 pt-0 flex-grow flex flex-col justify-between text-center relative z-10">
+                            <div>
+                                <h3 class="text-xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase mb-2 transition-colors group-hover:text-blue-600">
+                                    ${name}
+                                </h3>
+                                <p class="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-[0.3em] line-clamp-2 min-h-[30px] mb-6">
+                                    ${desc}
+                                </p>
+                            </div>
+
+                            <div class="relative">
+                                <span class="inline-block px-8 py-2.5 rounded-full 
+                                             bg-white/10 dark:bg-white/5 
+                                             backdrop-blur-md border border-black/[0.08] dark:border-white/10 
+                                             text-sm font-black text-zinc-900 dark:text-white transition-all 
+                                             group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent group-hover:shadow-lg group-hover:shadow-blue-600/30">
+                                    $${price}
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                container.appendChild(product);
+            });
+
+        } catch (error) {
+            console.error("Connection Error:", error);
+        }
+    };
+
+    fetchProducts();
+</script>
   <script src="main.js"></script>
 </body>
 </html>
